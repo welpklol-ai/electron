@@ -125,18 +125,17 @@ jobs:
       run: |
         cd src/electron
         git pack-refs
-    - name: Download Src Artifacts
+    - name: Download Src Gen Artifacts
       uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53
       with:
-        name: src_artifacts_${{ env.ARTIFACT_KEY }}
-        path: ./src_artifacts_${{ env.ARTIFACT_KEY }}
-    - name: Restore Src Artifacts
-      run: ./src/electron/script/actions/restore-artifacts.sh
+        name: src_gen_artifacts_${{ env.ARTIFACT_KEY }}
+        path: ./src/out/${{ env.ELECTRON_OUT_DIR }}/gen
     - name: Add Clang problem matcher
       shell: bash
       run: echo "::add-matcher::src/electron/.github/problem-matchers/clang.json"
     - name: Run Clang-Tidy
       run: |
+        ls -R ./src/out/${ELECTRON_OUT_DIR}/gen
         e init -f --root=$(pwd) --out=${ELECTRON_OUT_DIR} testing --target-cpu ${TARGET_ARCH}
 
         export GN_EXTRA_ARGS="target_cpu=\"${TARGET_ARCH}\""

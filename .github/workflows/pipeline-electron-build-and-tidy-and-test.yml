@@ -91,6 +91,7 @@ jobs:
       upload-to-storage: ${{ inputs.upload-to-storage }}
       is-asan: ${{ inputs.is-asan }}
       enable-ssh: ${{ inputs.enable-ssh }}
+      upload-src-gen-artifacts: true
     secrets: inherit
   clang-tidy:
     uses: ./.github/workflows/pipeline-segment-electron-clang-tidy.yml
